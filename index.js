@@ -30,13 +30,13 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
 
     var timedOut = false;
     var timeoutId = setTimeout(function() {
-      _log.log('[timeout occurred]');
+      _log('[timeout occurred]');
       timedOut = true;
     }, settings.timeout);
 
     var waitingForResult = false;
     var intervalId = setInterval(function() {
-      _log.log('[interval triggered]', 'timedOut:', timedOut, 'waitingForResult:', waitingForResult);
+      _log('[interval triggered]', 'timedOut:', timedOut, 'waitingForResult:', waitingForResult);
       if (!waitingForResult) {
         waitingForResult = true;
         settings.condition(function(conditionResult) {
@@ -59,7 +59,7 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
     }, settings.interval);
 
     function finishWaitFor(success, errorMsg) {
-      _log.log('[finishWaitFor]');
+      _log('[finishWaitFor]');
       clearTimeout(timeoutId);
       clearInterval(intervalId);
       timeoutId = intervalId = null;
