@@ -28,13 +28,13 @@ gulp.task('start-wiremock', function () {
 
 There are two ways to invoke gulp-waitfor:
 
-Basic: 
+**Basic:**
 
 ```javascript
 waitFor(function(cb) { /* cb(condition satisfied boolean)  */}, timeoutMs, intervalMs)
 ```
 
-Config object:
+**Config object:**
 
 ```javascript
 waitFor({
