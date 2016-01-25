@@ -19,7 +19,8 @@ gulp.task('start-wiremock', function () {
             request('http://localhost:${mockserver.port}/service/your-mock-service', function (error, response) {
                 cb(!error && response.statusCode === 200);
             });
-        }));
+        }))
+        .pipe(... /* run jasmine tests or simply got to the next task */);
 });
 ```
 
