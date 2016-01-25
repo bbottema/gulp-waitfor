@@ -36,7 +36,7 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
 
     var waitingForResult = false;
     var intervalId = setInterval(function() {
-      _log.log('[interval triggered]', 'timedOut:', timedOut, 'waitingForResult:', waitingForResult, 'conditionResult:', conditionResult);
+      _log.log('[interval triggered]', 'timedOut:', timedOut, 'waitingForResult:', waitingForResult);
       if (!waitingForResult) {
         waitingForResult = true;
         settings.condition(function(conditionResult) {
