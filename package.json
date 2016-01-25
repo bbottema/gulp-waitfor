@@ -1,25 +1,27 @@
 {
-  "name": "gulp-wait",
-  "version": "0.0.2",
-  "description": "A gulp task that inserts a delay before calling the next function in a chain.",
+  "name": "gulp-waitFor",
+  "version": "0.0.1",
+  "description": "A gulp task that waits until a condition is met or until timeout.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bpartridge83/gulp-wait.git"
+    "url": "https://github.com/bbottema/gulp-waitFor.git"
   },
   "keywords": [
     "gulp",
     "wait",
+    "waitFor",
+    "condition",
     "delay",
     "gulpplugin"
   ],
-  "author": "Brian Partridge",
-  "license": "BSD-2-Clause",
+  "author": "Benny Bottema",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bpartridge/gulp-wait/issues"
+    "url": "https://github.com/bbottema/gulp-waitFor/issues"
   },
   "dependencies": {
     "map-stream": "0.0.4"
