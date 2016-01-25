@@ -1,6 +1,7 @@
 'use strict';
 
 var map = require('map-stream');
+var gutil = require('gulp-util');
 var _log = console.log;
 
 var DEFAULT_TIMEOUT_MS = 60 * 1000; // 1 minute in milliseconds
@@ -51,7 +52,7 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
       }
       if (timedOut) {
         _log('gulp-waitfor: timeout after ' + settings.timout + ' milliseconds');
-        finishWaitFor(false, 'gulp-waitfor: timeout after ' + settings.timout + ' milliseconds');
+        finishWaitFor(false, gutil.PluginError('gulp-waitfor', 'gulp-waitfor: timeout after ' + settings.timout + ' milliseconds'));
       }
     }, settings.interval);
 
@@ -60,11 +61,7 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
       clearInterval(intervalId);
       timeoutId = intervalId = null;
       invokeAfter(success);
-      if (success) {
-        cb(null, file);
-      } else {
-        cb(errorMsg);
-      }
+      cb(errorMsg, file);
     }
   });
 

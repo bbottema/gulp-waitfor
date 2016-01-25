@@ -1,6 +1,6 @@
 {
   "name": "gulp-waitfor",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A gulp task that waits until a condition is met or until timeout.",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "url": "https://github.com/bbottema/gulp-waitfor/issues"
   },
   "dependencies": {
-    "map-stream": "0.0.4"
+    "map-stream": "0.0.6",
+    "gulp-util": "3.0.7"
   }
 }
