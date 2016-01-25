@@ -26,7 +26,7 @@ gulp.task('start-wiremock', function () {
 
 ## Options
 
-There are two ways to invoke `waitFor`:
+There are two ways to invoke gulp-waitfor:
 
 Basic: 
 
