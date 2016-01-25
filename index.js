@@ -50,9 +50,9 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
           waitingForResult = false;
         });
       }
-      if (timedOut) {
-        _log('gulp-waitfor: timeout after ' + settings.timout + ' milliseconds');
-        finishWaitFor(false, gutil.PluginError('gulp-waitfor', 'gulp-waitfor: timeout after ' + settings.timout + ' milliseconds'));
+      else if (timedOut) {
+        _log('gulp-waitfor: timeout after ' + settings.timeout + ' milliseconds');
+        finishWaitFor(false, new gutil.PluginError('gulp-waitfor', 'gulp-waitfor: timeout after ' + settings.timeout + ' milliseconds'));
       }
     }, settings.interval);
 
