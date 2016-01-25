@@ -25,7 +25,7 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
   return map(function(file, cb) {
     invokeBefore();
 
-    _log('waitFor: started waiting until condition met or timeout (' + settings.timeout + 'ms)');
+    _log('gulp-waitfor: started waiting until condition met or timeout (' + settings.timeout + 'ms)');
 
     var timedOut = false;
     var timeoutId = setTimeout(function() {
@@ -39,18 +39,18 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
         settings.condition(function(conditionResult) {
           if (conditionResult) {
             if (!timedOut) {
-              _log('waitFor: condition met result was (' + conditionResult + ')');
+              _log('gulp-waitfor: condition met result was (' + conditionResult + ')');
               finishWaitFor(true);
             }
             else {
-              _log('waitFor: condition met, but not before timeout (result was ' + conditionResult + ')');
+              _log('gulp-waitfor: condition met, but not before timeout (result was ' + conditionResult + ')');
             }
           }
           waitingForResult = false;
         });
       }
       if (timedOut) {
-        _log('waitFor: timeout after ' + settings.timout + ' milliseconds');
+        _log('gulp-waitfor: timeout after ' + settings.timout + ' milliseconds');
         finishWaitFor(false);
       }
     }, settings.interval);
@@ -66,14 +66,14 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
 
   function invokeBefore() {
     if (typeof settings.before === 'function') {
-      _log('waitFor: invoking before()');
+      _log('gulp-waitfor: invoking before()');
       settings.before();
     }
   }
 
   function invokeAfter(success) {
     if (typeof settings.after === 'function') {
-      _log('waitFor: invoking after()');
+      _log('gulp-waitfor: invoking after()');
       settings.after(success);
     }
   }

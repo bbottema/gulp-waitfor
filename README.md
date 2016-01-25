@@ -1,4 +1,4 @@
-gulp-waitFor
+gulp-waitfor
 =========
 
 A gulp task that waits until a condition is met or until timeout.
@@ -9,7 +9,7 @@ The following gulp example will start a wiremock server and delay the jasmine te
 
 ```javascript
 var gulp = require('gulp');
-var waitFor = require('../gulp-waitFor');
+var waitFor = require('../gulp-waitfor');
 var request = require('request');
 
 gulp.task('start-wiremock', function () {
