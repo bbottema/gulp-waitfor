@@ -1,6 +1,6 @@
 {
   "name": "gulp-waitfor",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "A gulp task that waits until a condition is met or until timeout.",
   "main": "index.js",
   "scripts": {
