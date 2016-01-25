@@ -32,13 +32,24 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
       timedOut = true;
     }, settings.timeout);
 
+    var waitingForResult = false;
     var intervalId = setInterval(function() {
-      var conditionResult = settings.condition();
-      if (conditionResult) {
-        _log('waitFor: condition met result was (' + conditionResult + ')');
-        finishWaitFor(true);
+      if (!waitingForResult) {
+        waitingForResult = true;
+        settings.condition(function(conditionResult) {
+          if (conditionResult) {
+            if (!timedOut) {
+              _log('waitFor: condition met result was (' + conditionResult + ')');
+              finishWaitFor(true);
+            }
+            else {
+              _log('waitFor: condition met, but not before timeout (result was ' + conditionResult + ')');
+            }
+          }
+          waitingForResult = false;
+        });
       }
-      else if (timedOut) {
+      if (timedOut) {
         _log('waitFor: timeout after ' + settings.timout + ' milliseconds');
         finishWaitFor(false);
       }
