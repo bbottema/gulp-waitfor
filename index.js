@@ -51,16 +51,20 @@ module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUnd
       }
       if (timedOut) {
         _log('gulp-waitfor: timeout after ' + settings.timout + ' milliseconds');
-        finishWaitFor(false);
+        finishWaitFor(false, 'gulp-waitfor: timeout after ' + settings.timout + ' milliseconds');
       }
     }, settings.interval);
 
-    function finishWaitFor(success) {
+    function finishWaitFor(success, errorMsg) {
       clearTimeout(timeoutId);
       clearInterval(intervalId);
       timeoutId = intervalId = null;
       invokeAfter(success);
-      cb(null, file);
+      if (success) {
+        cb(null, file);
+      } else {
+        cb(errorMsg);
+      }
     }
   });
 
