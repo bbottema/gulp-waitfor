@@ -31,7 +31,7 @@ There are two ways to invoke gulp-waitfor:
 **Basic:**
 
 ```javascript
-waitFor(function(cb) { /* cb(condition satisfied boolean)  */}, timeoutMs, intervalMs)
+waitFor(function(cb) { /* cb(condition satisfied boolean)  */}, [timeoutMs], [intervalMs])
 ```
 
 **Config object:**
