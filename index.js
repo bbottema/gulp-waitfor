@@ -1,41 +1,69 @@
 'use strict';
 
-var map = require('map-stream'),
-  _log = console.log;
+var map = require('map-stream');
+var _log = console.log;
 
-module.exports = function (settings) {
+var DEFAULT_TIMEOUT_MS = 60 * 1000; // 1 minute in milliseconds
+var DEFAULT_INTERVAL_MS = 500; // 500 milliseconds (taken from Ant's waitFor.http condition)
 
-  if (typeof settings !== 'object') {
-    settings = {
-      duration: settings
-    };
+module.exports = function(settingsOrCondition, timeoutOrUndefined, intervalOrUndefined) {
+
+  var settings = (typeof settingsOrCondition === 'object' && settingsOrCondition) || {
+    condition: settingsOrCondition,
+    verbose: true
+  };
+
+  settings.timeout = settingsOrCondition.timeout || timeoutOrUndefined || DEFAULT_TIMEOUT_MS;
+  settings.interval = settingsOrCondition.interval || intervalOrUndefined || DEFAULT_INTERVAL_MS;
+
+  if (typeof settings.condition !== 'function') {
+    throw new Error("argument should be a function or contain a function property 'condition'");
   }
 
-  if (!settings.verbose) {
-    _log = function () {
-      return;
-    };
-  }
+  _log = settings.verbose ? _log : function() {};
 
-  settings.duration = settings.duration || 1000;
+  return map(function(file, cb) {
+    invokeBefore();
 
-  return map(function (file, cb) {
+    _log('waitFor: started waiting until condition met or timeout (' + settings.timeout + 'ms)');
 
-    if (typeof settings.before === 'function') {
-      _log('Wait: Calling before()');
-      settings.before();
-    }
+    var timedOut = false;
+    var timeoutId = setTimeout(function() {
+      timedOut = true;
+    }, settings.timeout);
 
-    var timeout = setTimeout(function () {
-      timeout = null;
-      _log('Wait: Waited', settings.duration);
-      if (typeof settings.after === 'function') {
-        _log('Wait: Calling after()');
-        settings.after();
+    var intervalId = setInterval(function() {
+      var conditionResult = settings.condition();
+      if (conditionResult) {
+        _log('waitFor: condition met result was (' + conditionResult + ')');
+        finishWaitFor(true);
       }
-      cb(null, file);
-    }, settings.duration);
+      else if (timedOut) {
+        _log('waitFor: timeout after ' + settings.timout + ' milliseconds');
+        finishWaitFor(false);
+      }
+    }, settings.interval);
 
+    function finishWaitFor(success) {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+      timeoutId = intervalId = null;
+      invokeAfter(success);
+      cb(null, file);
+    }
   });
 
+  function invokeBefore() {
+    if (typeof settings.before === 'function') {
+      _log('waitFor: invoking before()');
+      settings.before();
+    }
+  }
+
+  function invokeAfter(success) {
+    if (typeof settings.after === 'function') {
+      _log('waitFor: invoking after()');
+      settings.after(success);
+    }
+  }
 };
