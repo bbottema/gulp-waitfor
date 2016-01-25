@@ -9,14 +9,14 @@ The following gulp example will start a wiremock server and delay the jasmine te
 
 ```javascript
 var gulp = require('gulp');
-var waitFor = require('../gulp-waitfor');
+var waitFor = require('gulp-waitfor');
 var request = require('request');
 
-gulp.task('start-wiremock', function () {
+gulp.task('run-e2e', function () {
     return gulp
         .exec('java -jar ./lib/wiremock-standalone.jar --your-options')
         .pipe(waitFor(function (cb) {
-            request('http://localhost:${mockserver.port}/service/your-mock-service', function (error, response) {
+            request('http://localhost:1235/service/your-mock-service', function (error, response) {
                 cb(!error && response.statusCode === 200);
             });
         }))
