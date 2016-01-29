@@ -5,7 +5,7 @@ A gulp task that waits until a condition is met or until timeout.
 
 ## Example
 
-The following gulp example will start a wiremock server and delay the jasmine tests until wiremock is finished booting.
+The following gulp example will start some web server and delay the build until it is finished booting.
 
 ```javascript
 var gulp = require('gulp');
@@ -14,13 +14,13 @@ var request = require('request');
 
 gulp.task('run-e2e', function () {
     return gulp
-        .exec('java -jar ./lib/wiremock-standalone.jar --your-options')
+        .spawn-your-server-process()
         .pipe(waitFor(function (cb) {
-            request('http://localhost:1235/service/your-mock-service', function (error, response) {
+            request('http://localhost:1235/service/some-test-service', function (error, response) {
                 cb(!error && response.statusCode === 200);
             });
         }))
-        .pipe(... /* run jasmine tests or simply got to the next task */);
+        .pipe(... /* run rest of the build */);
 });
 ```
 
